@@ -693,6 +693,9 @@
                 }else{
                     self.interactiveTransition.orientationTransformBeforeDismiss = 0;
                 }
+                //fix orientation bug
+                self.interactiveTransition.orientationTransformBeforeDismiss = 0;
+                
                 self.interactiveTransition.interactive = YES;
                 self.interactiveTransition.moviePlayer = self.moviePlayer;
                 
