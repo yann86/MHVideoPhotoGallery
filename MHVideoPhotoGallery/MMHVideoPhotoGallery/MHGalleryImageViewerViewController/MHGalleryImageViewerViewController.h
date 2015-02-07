@@ -32,6 +32,7 @@
 @property (nonatomic, strong)          MHTransitionPresentMHGallery *interactivePresentationTranstion;
 @property (nonatomic, strong)          MHTransitionCustomization *transitionCustomization;
 @property (nonatomic,strong)           MHUICustomization *UICustomization;
+@property (nonatomic,strong)           NSArray *rightBarButtons;
 
 @property (nonatomic,getter = isUserScrolling)                   BOOL userScrolls;
 @property (nonatomic,getter = isHiddingToolBarAndNavigationBar)  BOOL hiddingToolBarAndNavigationBar;

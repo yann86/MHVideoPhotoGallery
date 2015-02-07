@@ -165,6 +165,10 @@
                                                                       target:self
                                                                       action:@selector(sharePressed)];
     
+    if (!self.rightBarButtons) {
+        self.rightBarButtons = @[];
+    }
+    
     if (self.UICustomization.hideShare) {
         
         self.shareBarButton = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
@@ -386,6 +390,11 @@
                                                                          target:self
                                                                          action:nil];
     fixed.width = 30;
+    NSMutableArray *leftFixed = [@[] mutableCopy];
+    NSArray *rightFixed = self.rightBarButtons.count ? @[] : @[fixed];
+    for (int i = 0; i < self.rightBarButtons.count; i++) {
+        [leftFixed addObject:fixed];
+    }
     
     [self enableOrDisbaleBarbButtons];
     
@@ -396,9 +405,11 @@
         }else{
             [self changeToPlayButton];
         }
-        self.toolbar.items = @[self.shareBarButton,flex,self.leftBarButton,flex,self.playStopBarButton,flex,self.rightBarButton,flex,fixed];
+        self.toolbar.items = [[[[@[self.shareBarButton] arrayByAddingObjectsFromArray:leftFixed] arrayByAddingObjectsFromArray:@[flex,self.leftBarButton,flex,self.playStopBarButton,flex,self.rightBarButton,flex]] arrayByAddingObjectsFromArray:rightFixed] arrayByAddingObjectsFromArray:self.rightBarButtons];
+        //self.toolbar.items = @[self.shareBarButton,flex,self.leftBarButton,flex,self.playStopBarButton,flex,self.rightBarButton,flex,fixed];
     }else{
-        self.toolbar.items =@[self.shareBarButton,flex,self.leftBarButton,flex,self.rightBarButton,flex,fixed];
+        self.toolbar.items = [[[[@[self.shareBarButton] arrayByAddingObjectsFromArray:leftFixed] arrayByAddingObjectsFromArray:@[flex,self.leftBarButton,flex,self.rightBarButton,flex]] arrayByAddingObjectsFromArray:rightFixed] arrayByAddingObjectsFromArray:self.rightBarButtons];
+        //self.toolbar.items =@[self.shareBarButton,flex,self.leftBarButton,flex,self.rightBarButton,flex,fixed];
     }
 }
 
@@ -1318,7 +1329,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+
     self.moviePlayer.backgroundView.backgroundColor = [self.viewController.UICustomization MHGalleryBackgroundColorForViewMode:[self currentViewMode]];
     self.scrollView.backgroundColor = [self.viewController.UICustomization MHGalleryBackgroundColorForViewMode:[self currentViewMode]];
     
